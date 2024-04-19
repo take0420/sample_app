@@ -6,4 +6,9 @@ class UsersController < ApplicationController
   def new
     @user = User.new
   end
+
+  # POST /users
+  def create
+    # params => user => user.save => if ~ else ... end
+  end
 end
