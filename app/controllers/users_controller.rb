@@ -9,6 +9,17 @@ class UsersController < ApplicationController
 
   # POST /users
   def create
-    # params => user => user.save => if ~ else ... end
+    @user = User.new(user_params)
+    if @user.save
+      # Success
+    else
+      render 'new', status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
 end
