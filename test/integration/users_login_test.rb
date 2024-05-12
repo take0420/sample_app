@@ -24,29 +24,29 @@ class InvalidPasswordTest < UsersLogin
   end
 end
 
-# class ValidLogin < UsersLogin
+class ValidLogin < UsersLogin
 
-#   def setup
-#     super
-#     post login_path, params: { session: { email: @user.email, password: "password" } }
-#   end
-# end
+  def setup
+    super
+    post login_path, params: { session: { email: @user.email, password: "password" } }
+  end
+end
 
-# class ValidLoginTest < ValidLogin
+class ValidLoginTest < ValidLogin
 
-#   test "valid login" do
-#     assert is_logged_in?
-#     assert_redirected_to @user
-#   end
+  test "valid login" do
+    assert is_logged_in?
+    assert_redirected_to @user
+  end
 
-#   test "redirect after login" do
-#     follow_redirect!
-#     assert_template 'users/show'
-#     assert_select "a[href=?]", login_path, count: 0
-#     assert_select "a[href=?]", logout_path
-#     assert_select "a[href=?]", user_path(@user)
-#   end
-# end
+  test "redirect after login" do
+    follow_redirect!
+    assert_template 'users/show'
+    assert_select "a[href=?]", login_path, count: 0
+    assert_select "a[href=?]", logout_path
+    assert_select "a[href=?]", user_path(@user)
+  end
+end
 
 # class Logout < ValidLogin
 
