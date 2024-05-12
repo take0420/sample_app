@@ -48,26 +48,26 @@ class ValidLoginTest < ValidLogin
   end
 end
 
-# class Logout < ValidLogin
+class Logout < ValidLogin
 
-#   def setup
-#     super
-#     delete logout_path
-#   end
-# end
+  def setup
+    super
+    delete logout_path
+  end
+end
 
-# class LogoutTest < Logout
+class LogoutTest < Logout
 
-#   test "successful logout" do
-#     assert_not is_logged_in?
-#     assert_response :see_other
-#     assert_redirected_to root_url
-#   end
+  test "successful logout" do
+    assert_not is_logged_in?
+    assert_response :see_other
+    assert_redirected_to root_url
+  end
 
-#   test "redirect after logout" do
-#     follow_redirect!
-#     assert_select "a[href=?]", login_path
-#     assert_select "a[href=?]", logout_path, count: 0
-#     assert_select "a[href=?]", user_path(@user), count: 0
-#   end
-# end
+  test "redirect after logout" do
+    follow_redirect!
+    assert_select "a[href=?]", login_path
+    assert_select "a[href=?]", logout_path, count: 0
+    assert_select "a[href=?]", user_path(@user), count: 0
+  end
+end
