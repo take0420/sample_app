@@ -26,6 +26,15 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def update
+    @user = User.find_by(params[:id])
+    if @user.update(user_params)
+      # 更新に成功した場合を扱う
+    else
+      render 'edit', status: :unprocessable_entity
+    end
+  end
+
   private
 
     # Strong Parameters
