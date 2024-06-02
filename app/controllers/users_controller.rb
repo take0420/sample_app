@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_login, only: [:edit, :update]
+  before_action :logged_in_user, only: [:edit, :update]
 
   def show
     @user = User.find(params[:id])
@@ -50,8 +50,8 @@ class UsersController < ApplicationController
 
     # ログイン済みのユーザーか確認
     def logged_in_user
-      unless logged_in_user?
-        flash[:danger]= "Please log in."
+      unless logged_in?
+        flash[:danger] = "Please log in."
         redirect_to login_url, status: :see_other
       end
     end
