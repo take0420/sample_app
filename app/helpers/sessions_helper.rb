@@ -31,6 +31,11 @@ module SessionsHelper
     end
   end
 
+  # 渡されたユーザーがCurrent_userであればtrueを返す
+  def current_user?(user)
+    user && user == current_user
+  end
+
   # 現在ログイン中のユーザーがいる場合、そのユーザーを返す
   def current_user
     if session[:user_id]
