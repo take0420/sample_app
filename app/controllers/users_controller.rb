@@ -34,7 +34,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find_by(params[:id])
+    @user = User.find(params[:id])
     if @user.update(user_params)
       flash[:success] = "Profile updated"
       redirect_to @user
@@ -64,7 +64,7 @@ class UsersController < ApplicationController
 
     # 正しいユーザーか確認
     def correct_user
-      @user = User.find_by(params[:id])
+      @user = User.find(params[:id])
       redirect_to(root_url, status: :see_other) unless current_user?(@user)
     end
 end
