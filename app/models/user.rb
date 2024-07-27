@@ -45,7 +45,7 @@ class User < ApplicationRecord
     digest = send("#{attribute}_digest")
     return false if digest.nil?
 
-    Bcrypt::Password.new(digest).is_password?(token)
+    BCrypt::Password.new(digest).is_password?(token)
   end
 
   # ユーザーのログイン情報を破棄する
