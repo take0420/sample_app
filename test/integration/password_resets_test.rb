@@ -19,4 +19,23 @@ class ForgotPasswordFormTest < PasswordResets
     assert_not flash.empty?
     assert_template 'password_resets/new'
   end
+
+  class PasswordResetForm < PasswordResets
+    def setup
+      super
+      @user = users(:michael)
+      post password_resets_path,
+           params: { password_reset: { email: @user.email } }
+      @reset_user = assigns(:user)
+    end
+  end
+
+  class PasswordFormTest < PasswordResetForm
+    test 'reset with valid email' do
+      assert_not_equal @user.reset_digest, @reset_user.reset_digest
+      assert_equal 1, ActionMailer::Base.deliveries.size
+      assert_not flash.empty?
+      assert_redirected_to root_url
+    end
+  end
 end
