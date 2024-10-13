@@ -29,6 +29,7 @@
 !/tmp/storage/
 !/tmp/storage/.keep
 
+# Ignore public assets folder
 /public/assets
 
 # Ignore master key for decrypting credentials and more.
@@ -37,4 +38,8 @@
 # Ignore history file used by IRB for interactive Ruby.
 .irb_history
 
+# Ignore Redis dump file
 dump.rdb
+
+# Ignore environment variable file
+.env
