@@ -1,12 +1,10 @@
 class User < ApplicationRecord
   has_many :microposts, dependent: :destroy
   attr_accessor :remember_token, :activation_token, :reset_token
-
   before_save   :downcase_email
   before_create :create_activation_digest
-
-  validates :name,  presence: true, length: { maximum: 50 }
-  VALID_EMAIL_REGEX = /\A[\w+-]+(\.[\w+-]+)*@[a-z\d-]+(\.[a-z\d-]+)*\.[a-z]+\z/i
+  validates :name, presence: true, length: { maximum: 50 }
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: true
@@ -14,21 +12,18 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
   # 渡された文字列のハッシュ値を返す
-  def self.digest(string)
-    cost = if ActiveModel::SecurePassword.min_cost
-             BCrypt::Engine::MIN_COST
-           else
-             BCrypt::Engine.cost
-           end
-    BCrypt::Password.create(string, cost:)
+  def User.digest(string)
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
+                                                  BCrypt::Engine.cost
+    BCrypt::Password.create(string, cost: cost)
   end
 
   # ランダムなトークンを返す
-  def self.new_token
+  def User.new_token
     SecureRandom.urlsafe_base64
   end
 
-  # 永続的なセッションのためにユーザーをデータベースに記憶する
+  # 永続的セッションのためにユーザーをデータベースに記憶する
   def remember
     self.remember_token = User.new_token
     update_attribute(:remember_digest, User.digest(remember_token))
@@ -36,6 +31,7 @@ class User < ApplicationRecord
   end
 
   # セッションハイジャック防止のためにセッショントークンを返す
+  # この記憶ダイジェストを再利用しているのは単に利便性のため
   def session_token
     remember_digest || remember
   end
@@ -44,7 +40,6 @@ class User < ApplicationRecord
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
     return false if digest.nil?
-
     BCrypt::Password.new(digest).is_password?(token)
   end
 
@@ -61,7 +56,6 @@ class User < ApplicationRecord
 
   # 有効化用のメールを送信する
   def send_activation_email
-    Rails.logger.debug "User object: #{inspect}"
     UserMailer.account_activation(self).deliver_now
   end
 
@@ -82,19 +76,22 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
-  # 完全な実装は14章の「ユーザーをフォローする」を参照
+  # 試作feedの定義
+  # 完全な実装は次章の「ユーザーをフォローする」を参照
   def feed
-    Micropost.where('user_id = ?', id)
+    Micropost.where("user_id = ?", id)
   end
 
   private
 
-  def downcase_email
-    self.email = email.downcase
-  end
+    # メールアドレスをすべて小文字にする
+    def downcase_email
+      self.email = email.downcase
+    end
 
-  def create_activation_digest
-    self.activation_token  = User.new_token
-    self.activation_digest = User.digest(activation_token)
-  end
+    # 有効化トークンとダイジェストを作成および代入する
+    def create_activation_digest
+      self.activation_token  = User.new_token
+      self.activation_digest = User.digest(activation_token)
+    end
 end
