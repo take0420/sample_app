@@ -61,6 +61,7 @@ class User < ApplicationRecord
 
   # 有効化用のメールを送信する
   def send_activation_email
+    Rails.logger.debug "User object: #{inspect}"
     UserMailer.account_activation(self).deliver_now
   end
 
