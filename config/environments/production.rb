@@ -46,7 +46,7 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [ "http://example.com", /http:\/\/example.*/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # Include generic and useful information about system operation, but avoid logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII).
@@ -67,15 +67,22 @@ Rails.application.configure do
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.delivery_methods = :smtp
-  host = 'https://sample_app.onrender.com'
+  config.action_mailer.delivery_method = :smtp
+
+  # Set the host and default URL options for emails
+  host = 'sample-app-dis5.onrender.com'
   config.action_mailer.default_url_options = { host: }
+
+  # Set default "from" email address for ActionMailer
+  config.action_mailer.default_options = { from: 'noreply@example.com' }
+
+  # SMTP settings for Mailgun (use pure domain name without https://)
   ActionMailer::Base.smtp_settings = {
     port: 587,
     address: 'smtp.mailgun.org',
     user_name: ENV['MAILGUN_SMTP_LOGIN'],
     password: ENV['MAILGUN_SMTP_PASSWORD'],
-    domain: host,
+    domain: 'sample-app-dis5.onrender.com',
     authentication: :plain
   }
 
