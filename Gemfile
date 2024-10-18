@@ -5,6 +5,7 @@ ruby '3.2.5'
 
 gem 'actionpack', '>= 7.0.8.3'
 gem 'actiontext', '>= 7.0.8.3'
+gem "active_storage_validations", "0.9.8"
 gem 'bcrypt', '3.1.18'
 gem 'bootsnap', '1.16.0', require: false
 gem 'bootstrap-sass', '3.4.1'
@@ -50,6 +51,3 @@ group :test do
   gem 'selenium-webdriver',       '4.8.3'
   gem 'webdrivers',               '5.2.0'
 end
-
-# Windows ではタイムゾーン情報用の tzinfo-data gem を含める必要があります
-# gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
