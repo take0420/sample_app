@@ -21,6 +21,16 @@ class MicropostsInterfaceTest < MicropostsInterface
     assert_select 'a[href=?]', '/?page=2'
   end
 
+  test 'should create a micropost on valid submission' do
+    content = 'This micropost really ties the room together'
+    assert_difference 'Micropost.count', 1 do
+      post microposts_path, params: { micropost: { content: content } }
+    end
+    assert_redirected_to root_url
+    follow_redirect!
+    assert_match content, response.body
+  end
+
   test 'should have micropost delete links on own profile page' do
     get user_path(@user)
     assert_select 'a', text: 'delete'
@@ -33,7 +43,7 @@ class MicropostsInterfaceTest < MicropostsInterface
     end
   end
 
-  test "should not have deleted links on other user's profile page" do
+  test "should not have delete links on other user's profile page" do
     get user_path(users(:archer))
     assert_select 'a', { text: 'delete', count: 0 }
   end
