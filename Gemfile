@@ -5,12 +5,13 @@ ruby '3.2.5'
 
 gem 'actionpack', '>= 7.0.8.3'
 gem 'actiontext', '>= 7.0.8.3'
-gem "active_storage_validations", "0.9.8"
+gem 'active_storage_validations', '0.9.8'
 gem 'bcrypt', '3.1.18'
 gem 'bootsnap', '1.16.0', require: false
 gem 'bootstrap-sass', '3.4.1'
 gem 'bootstrap-will_paginate', '1.0.0'
-gem 'faker',           '2.21.0'
+gem 'faker', '2.21.0'
+gem 'image_processing', '1.12.2'
 gem 'importmap-rails', '1.1.5'
 gem 'jbuilder',        '2.11.5'
 gem 'nokogiri',        '>= 1.16.5'
