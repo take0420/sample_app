@@ -28,9 +28,9 @@ gem 'turbo-rails',     '1.4.0'
 gem 'will_paginate',   '3.3.1'
 gem 'yard',            '>= 0.9.36'
 
-group :production do
-  gem 'aws-sdk-s3', '1.114.0', require: false
-end
+# group :production do
+#   gem 'aws-sdk-s3', '1.114.0', require: false
+# end
 
 group :development, :test do
   gem 'debug', '1.7.1', platforms: %i[mri mingw x64_mingw]
