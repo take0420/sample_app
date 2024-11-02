@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'password_resets/new'
-  get 'password_resets/edit'
   root   'static_pages#home'
   get    '/help',    to: 'static_pages#help'
   get    '/about',   to: 'static_pages#about'
@@ -14,12 +12,9 @@ Rails.application.routes.draw do
       get :following, :followers
     end
   end
-  resources :users
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: %i[new create edit update]
-  resources :microposts, only: %i[create destroy]
+  resources :microposts,          only: %i[create destroy]
+  resources :relationships,       only: %i[create destroy]
   get '/microposts', to: 'static_pages#home'
-
-  # Letter Opener Web for development environment
-  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 end
