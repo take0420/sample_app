@@ -50,7 +50,7 @@ class Unfollow < Following
   def setup
     super
     @user.follow(@other)
-    @relationship = @user.acitve_relationships.find_by(followed_id: @other.id)
+    @relationship = @user.active_relationships.find_by(followed_id: @other.id)
   end
 end
 
@@ -62,7 +62,10 @@ class UnfollowTest < Unfollow
     assert_response :see_other
     assert_redirected_to @other
   end
-end
 
-# test 'should unfollow a user with Hotwire' do
-# end
+  test 'should unfollow a user with Hotwire' do
+    assert_difference '@user.following.count', -1 do
+      delete relationship_path(@relationship, format: :turbo_stream)
+    end
+  end
+end
