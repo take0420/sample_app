@@ -53,3 +53,16 @@ class Unfollow < Following
     @relationship = @user.acitve_relationships.find_by(followed_id: @other.id)
   end
 end
+
+class UnfollowTest < Unfollow
+  test 'should unfollow a user the standard way' do
+    assert_difference '@user.following.count', -1 do
+      delete relationship_path(@relationship)
+    end
+    assert_response :see_other
+    assert_redirected_to @other
+  end
+end
+
+# test 'should unfollow a user with Hotwire' do
+# end
