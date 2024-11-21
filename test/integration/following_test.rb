@@ -45,3 +45,11 @@ class FollowTest < Following
     end
   end
 end
+
+class Unfollow < Following
+  def setup
+    super
+    @user.follow(@other)
+    @relationship = @user.acitve_relationships.find_by(followed_id: @other.id)
+  end
+end
