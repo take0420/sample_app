@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.2.5'
+ruby '3.3.5'
 
 gem 'actionpack', '>= 7.0.8.3'
 gem 'actiontext', '>= 7.0.8.3'
@@ -14,9 +14,9 @@ gem 'faker', '2.21.0'
 gem 'image_processing', '1.12.2'
 gem 'importmap-rails', '1.1.5'
 gem 'jbuilder',        '2.11.5'
-gem 'nokogiri',        '>= 1.16.5'
+gem "nokogiri", ">= 1.18.8"
 gem 'puma',            '5.6.8'
-gem 'rack',            '>= 2.2.8.1'
+gem "rack", ">= 2.2.13"
 gem 'rails',           '7.0.8.3'
 gem 'rdoc',            '>= 6.5.1.1'
 gem 'rexml',           '>= 3.3.3'
